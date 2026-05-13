@@ -38,7 +38,7 @@ public class Main {
             return; // Return xwris na dhmiourgithei neos iatros
         }
         System.out.println("Doctor's years of experience: ");
-        int years = scanner.nextLine();
+        int years = scanner.nextInt();
         if (years < 0) {
             System.out.println("Invalid experience years number!");
         }
@@ -228,8 +228,8 @@ public class Main {
         scanner.nextLine();
         return cost;
     }
-
-    public static void addExam() {
+    //TODO DOULIA TOU ALEXIOU DEN TREXI POLA ERRORS
+   /* public static void addExam() {
         System.out.println("First choose the lead doctor:");
         Doctor doctor = chooseDoctor();
         if  (doctor == null) {
@@ -313,9 +313,42 @@ public class Main {
             System.out.println("Invalid input!");
             return; // Return xwris na dhmiourgithei nea exetash
         }
-    } // addExam
+    } // addExam*/
 
     // Menu exetasewn
+    public static void showAllExams(){
+        for (Exam e : examsMap.values()) {
+            System.out.println(e.toString());
+        }
+
+    }
+    //TODO DEN TREXH
+    public static void showOneExam(){
+        if (examsMap.isEmpty()) {
+            System.out.println("There are no Exams.");
+            return;
+        }
+        showAllExams();
+        System.out.println("Choose a exam by inputting his ID: ");
+        int ExamID = scanner.nextInt();
+        scanner.nextLine(); // "Katharismos" grammhs logw tou nextInt
+        Exam exam = examsMap.get(ExamID);
+        if (!examsMap.containsKey(ExamID)) {
+            System.out.println("There is no examwith the given ID!");
+            return;
+        }
+        System.out.println("Exams information: " + exam.toString());
+       /* for (Appointment a : appointmentsMap.values()) {
+            if (a.getPatientID() == patientID) {
+                System.out.println(a.toString());
+                isInAppointment= true;
+            }
+        } // for
+        if (!isInAppointment) {
+            System.out.println("The patient does not have any appointments.");
+        }*/
+
+    }
     public static void examsMenu() {
         boolean done = false;
         while (!done) {
@@ -327,8 +360,14 @@ public class Main {
             String choice = scanner.nextLine();
             switch (choice) {
                 case "1":
-                    addExam()
-                     break;
+                   // addExam();
+                    break;
+                case"2":
+                    showAllExams();
+                    break;
+                case"3":
+                    showOneExam();
+                    break;
                 case "0":
                     done = true;
                     break;
@@ -337,19 +376,20 @@ public class Main {
     }
     public static void addAppointment(){
         System.out.println("Chose patient");
-         if (patientsMap.isEmpty()) {
-            System.out.println("No doctors available.");
-            return null;
+        if (appointmentsMap.isEmpty()) {
+            System.out.println("No appointments available.");
+            return;
         }
-        showAllDoctors();
-        System.out.println("Choose a doctor by inputting their ID: ");
-        int chosenDoctorID = scanner.nextInt();
+        showAllPatients();
+        System.out.println("Choose a patient by inputting their ID: ");
+        int chosenPatientID = scanner.nextInt();
         scanner.nextLine(); // "Katharismos" grammhs logw tou nextInt
-        if (!doctorsMap.containsKey(chosenDoctorID)) {
-            System.out.println("There's no doctor with the given ID!");
-            return null;
+        if (!patientsMap.containsKey(chosenPatientID)) {
+            System.out.println("There's no patient with the given ID!");
+            return;
         }
-        Doctor chosenDoctor = doctorsMap.get(chosenDoctorID);
+        Patient chosenPatient = patientsMap.get(chosenPatientID);
+
         
         
 
@@ -360,27 +400,27 @@ public class Main {
         }
 
     }
-    public static showPatientsAppointment(){
+    public static void showPatientsAppointment(){
 
     }
     public static void deleteAppointment(){
 
     }
-    public static void appointmentMenu(){
+    public static void appointmentMenu() {
         boolean done = false;
         while (!done) {
             System.out.println("1. Add appointment");
             System.out.println("2. Show alla appointments");
             System.out.println("3. Show patients appointment");
-            System.out.println("4.Delete appointment")
+            System.out.println("4.Delete appointment");
             System.out.println("0. Return to main menu");
             System.out.println("> ");
             String choice = scanner.nextLine();
             switch (choice) {
                 case "1":
-                    addappointment();
-                        break;
-                case"2":
+                    addAppointment();
+                    break;
+                case "2":
                     showAllAppointments();
                     break;
                 case "3":
@@ -390,46 +430,49 @@ public class Main {
                     deleteAppointment();
                     break;
                 case "0":
-                    done= true;
-                    break;
-
-    }
-    public static void statisticsMenu(){
-
-    }
-
-    public static void main (String[]args){
-        boolean done = false;
-        while (!done) {
-            System.out.println("\n1. Iatroi");
-            System.out.println("2. Astheneis");
-            System.out.println("3. Exetaseis");
-            System.out.println("4. Rantevou");
-            System.out.println("5. Statistika");
-            System.out.println("0. Exodos");
-            System.out.print("> ");
-            String choice = scanner.nextLine();
-            switch (choice) {
-                case "1":
-                    doctorMenu();
-                    break;
-                case "2":
-                    patientsMenu();
-                    break;
-                case "3":
-                    examsMenu();
-                    break;
-                case "4":
-                    appointmentMenu();
-                    break;
-                case "5":
-                    statisticsMenu();
-                    break;
-                case "0":
                     done = true;
                     break;
             }
-        } // while
-    } // main
-} // class
+
+        }
+    }
+            public static void statisticsMenu () {
+
+            }
+
+
+            public static void main (String[]args){
+                boolean done = false;
+                while (!done) {
+                    System.out.println("\n1. Iatroi");
+                    System.out.println("2. Astheneis");
+                    System.out.println("3. Exetaseis");
+                    System.out.println("4. Rantevou");
+                    System.out.println("5. Statistika");
+                    System.out.println("0. Exodos");
+                    System.out.print("> ");
+                    String choice = scanner.nextLine();
+                    switch (choice) {
+                        case "1":
+                            doctorMenu();
+                            break;
+                        case "2":
+                            patientsMenu();
+                            break;
+                        case "3":
+                            examsMenu();
+                            break;
+                        case "4":
+                            appointmentMenu();
+                            break;
+                        case "5":
+                            statisticsMenu();
+                            break;
+                        case "0":
+                            done = true;
+                            break;
+                    }
+                } // while
+            } // main
+        } // class
 
