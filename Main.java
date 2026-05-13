@@ -375,15 +375,7 @@ public class Main {
             return;
         }
         System.out.println("Exams information: " + exam.toString());
-       /* for (Appointment a : appointmentsMap.values()) {
-            if (a.getPatientID() == patientID) {
-                System.out.println(a.toString());
-                isInAppointment= true;
-            }
-        } // for
-        if (!isInAppointment) {
-            System.out.println("The patient does not have any appointments.");
-        }*/
+      
 
     }
     public static void examsMenu() {
@@ -413,8 +405,8 @@ public class Main {
     }
     public static void addAppointment(){
         System.out.println("Choose patient");
-        if (appointmentsMap.isEmpty()) {
-            System.out.println("No appointments available.");
+        if (patientsMap.isEmpty()) {
+            System.out.println("No patients available.");
             return;
         }
         showAllPatients();
@@ -426,6 +418,32 @@ public class Main {
             return;
         }
         Patient chosenPatient = patientsMap.get(chosenPatientID);
+        System.out.println("Choose Exam");
+        if(appointmentsMap.isEmpty()){
+            System.out.println("There are no appointments");
+            return;
+        }
+        showAllExams();
+        System.out.println("Choose a exam by inputting their ID: ");
+        int chosenExamId = scanner.nextInt();
+        scanner.nextLine();
+        if(!examsMap.containsKey(chosenExamId)){
+            System.out.println("There is no exam with this id");
+            return;
+        }
+        Exam chosenExam = examsMap.get(chosenExamId);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        boolean validDate = false;
+        while (!validDate) {
+            System.out.println("Ημερομηνία (DD/MM/YYYY): ");
+            String examDate = scanner.nextLine();
+            try {
+                LocalDate.parse(examDate, formatter); // an einai lathos -> exception
+                validDate = true;
+            } catch (DateTimeParseException e) {
+                System.out.println("Λάθος μορφή ημερομηνίας. Δοκιμάστε ξανά.");
+            }
+        }
     }
 
     public static void showAllAppointments(){
