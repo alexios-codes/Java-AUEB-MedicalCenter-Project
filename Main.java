@@ -1,5 +1,8 @@
 import java.util.HashMap;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Main {
     // Sylloges se hashmaps
@@ -419,8 +422,8 @@ public class Main {
         }
         Patient chosenPatient = patientsMap.get(chosenPatientID);
         System.out.println("Choose Exam");
-        if(appointmentsMap.isEmpty()){
-            System.out.println("There are no appointments");
+        if(examsMap.isEmpty()){
+            System.out.println("There are no exams");
             return;
         }
         showAllExams();
