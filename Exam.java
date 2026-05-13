@@ -43,6 +43,6 @@ public abstract class Exam{
     public String toString() {
         return "Kwdikos exetashs: " + ExamID + " | Onoma exetashs: " + ExamName + " | Kathgoria exetashs: " +
                 ExamCategory + " | Megisto plhthos rantevou: " + maxSlotsPerDay + " | Kostos: "
-                + cost + " | Ypeufthynos iatros: " leadDoctorID;
+                + cost + " | Ypeufthynos iatros: " + leadDoctorID;
     }
 }
