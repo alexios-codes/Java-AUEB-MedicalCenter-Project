@@ -20,7 +20,7 @@ public class MicrobiologicalExam extends Exam {
     }
 
     public String toString() {
-        return super.toString() + "| Typos deigmatos: " + sampleType;
+        return super.toString() + "| Sample type: " + sampleType;
 
     }
 }

@@ -19,7 +19,7 @@ public class ImagingExam extends Exam {
     }
 
     public String toString() {
-        return super.toString() + "| Eidos mhxanhmatos: " + machineType;
+        return super.toString() + "| Machine type: " + machineType;
 
     }
 }

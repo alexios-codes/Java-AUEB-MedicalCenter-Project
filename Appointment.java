@@ -36,8 +36,8 @@
 
 
     public String toString() {
-        return "Kwdikos rantevou: " + appointmentID + " | Kwdikos asthenh: " +
-                patientID + " | Kwdikos exetashs: " + examID + " | Epeigousa exetash: " + fastResults + "| Hmeromhnia exetashs: " + examDate;
+        return "Appointment ID: " + appointmentID + " | Patient's ID: " +
+                patientID + " | Exam ID: " + examID + " | Fast results status: " + fastResults + "| Exam date: " + examDate;
     }
 }
 

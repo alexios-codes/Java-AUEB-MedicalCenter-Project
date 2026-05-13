@@ -41,8 +41,8 @@ public abstract class Exam{
     public abstract double getFinalCost(boolean fastResults); // για να υπολογίζεται το τελικό κόστος στις υποκλάσεις
 
     public String toString() {
-        return "Kwdikos exetashs: " + ExamID + " | Onoma exetashs: " + ExamName + " | Kathgoria exetashs: " +
-                ExamCategory + " | Megisto plhthos rantevou: " + maxSlotsPerDay + " | Kostos: "
-                + cost + " | Ypeufthynos iatros: " + leadDoctorID;
+        return "Exam ID: " + ExamID + " | Exam name: " + ExamName + " | Exam category: " +
+                ExamCategory + " | Max slots per day: " + maxSlotsPerDay + " | Cost: "
+                + cost + " | Lead doctor: " + leadDoctorID;
     }
 }

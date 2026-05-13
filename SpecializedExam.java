@@ -21,7 +21,7 @@ public class SpecializedExam extends Exam {
 
 
     public String toString() {
-        return super.toString() + "| Eidikothta exetashs: " + examSpecialty;
+        return super.toString() + "| Exam specialty: " + examSpecialty;
 
     }
 }
