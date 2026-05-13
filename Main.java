@@ -328,10 +328,70 @@ public class Main {
             switch (choice) {
                 case "1":
                     addExam()
+                     break;
+                case "0":
+                    done = true;
+                    break;
             }
         }
     }
+    public static void addAppointment(){
+        System.out.println("Chose patient");
+         if (patientsMap.isEmpty()) {
+            System.out.println("No doctors available.");
+            return null;
+        }
+        showAllDoctors();
+        System.out.println("Choose a doctor by inputting their ID: ");
+        int chosenDoctorID = scanner.nextInt();
+        scanner.nextLine(); // "Katharismos" grammhs logw tou nextInt
+        if (!doctorsMap.containsKey(chosenDoctorID)) {
+            System.out.println("There's no doctor with the given ID!");
+            return null;
+        }
+        Doctor chosenDoctor = doctorsMap.get(chosenDoctorID);
+        
+        
+
+    }
+    public static void showAllAppointments(){
+         for (Appointment a : appointmentsMap.values()) {
+            System.out.println(a.toString());
+        }
+
+    }
+    public static showPatientsAppointment(){
+
+    }
+    public static void deleteAppointment(){
+
+    }
     public static void appointmentMenu(){
+        boolean done = false;
+        while (!done) {
+            System.out.println("1. Add appointment");
+            System.out.println("2. Show alla appointments");
+            System.out.println("3. Show patients appointment");
+            System.out.println("4.Delete appointment")
+            System.out.println("0. Return to main menu");
+            System.out.println("> ");
+            String choice = scanner.nextLine();
+            switch (choice) {
+                case "1":
+                    addappointment();
+                        break;
+                case"2":
+                    showAllAppointments();
+                    break;
+                case "3":
+                    showPatientsAppointment();
+                    break;
+                case "4":
+                    deleteAppointment();
+                    break;
+                case "0":
+                    done= true;
+                    break;
 
     }
     public static void statisticsMenu(){
