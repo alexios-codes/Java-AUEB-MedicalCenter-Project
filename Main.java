@@ -38,7 +38,7 @@ public class Main {
             return; // Return xwris na dhmiourgithei neos iatros
         }
         System.out.println("Doctor's years of experience: ");
-        String years = scanner.nextLine();
+        int years = scanner.nextLine();
         if (years < 0) {
             System.out.println("Invalid experience years number!");
         }
@@ -157,7 +157,7 @@ public class Main {
 
         Patient newPatient = new Patient(name, phone, mail); // Dhmiourgia neou asthenh me bash ta dedomena pou edwse
         // o xrhsths
-        patientsMap.put(patient.getPatientID(), newPatient); // Prosthkh tou parapanw neou antikeimenou sthn syllogh asthenwn
+        patientsMap.put(newPatient.getPatientID(), newPatient); // Prosthkh tou parapanw neou antikeimenou sthn syllogh asthenwn
     }
 
     public static void showAllPatients() { // Emfanish olwn twn asthenwn
@@ -354,10 +354,10 @@ public class Main {
                     doctorMenu();
                     break;
                 case "2":
-                    PatientsMenu();
+                    patientsMenu();
                     break;
                 case "3":
-                    ExamsMenu();
+                    examsMenu();
                     break;
                 case "4":
                     appointmentMenu();
