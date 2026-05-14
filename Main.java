@@ -372,10 +372,6 @@ public class Main {
     }
 
     public static void showOneExam() {
-        if (examsMap.isEmpty()) {
-            System.out.println("There are no Exams.");
-            return;
-        }
         showAll(examsMap,"exams");
         System.out.println("Choose a exam by inputting his ID: ");
         int ExamID = scanner.nextInt();
@@ -417,10 +413,6 @@ public class Main {
 
     public static void addAppointment() {
         System.out.println("Choose patient");
-        if (patientsMap.isEmpty()) {
-            System.out.println("No patients available.");
-            return;
-        }
         showAll(patientsMap,"patients");
         System.out.println("Choose a patient by inputting their ID: ");
         int chosenPatientID = scanner.nextInt();
@@ -431,10 +423,6 @@ public class Main {
         }
         Patient chosenPatient = patientsMap.get(chosenPatientID);
         System.out.println("Choose Exam");
-        if (examsMap.isEmpty()) {
-            System.out.println("There are no exams");
-            return;
-        }
         showAll(examsMap,"exams");
         System.out.println("Choose a exam by inputting their ID: ");
         int chosenExamId = scanner.nextInt();
