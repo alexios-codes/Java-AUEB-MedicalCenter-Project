@@ -12,7 +12,8 @@ public class Main {
     private static HashMap<Integer, Exam> examsMap = new HashMap<>();
     private static HashMap<Integer, Appointment> appointmentsMap = new HashMap<>();
     static Scanner scanner = new Scanner(System.in);
-    //voithitikh methodos gia na mikrini o kodikas
+
+    // voithitikh methodos gia na mikrini o kodikas
     public static void showAll(HashMap<Integer, ?> map, String type) {
         if (map.isEmpty()) {
             System.out.println("Δεν υπάρχουν " + type + ".");
@@ -71,8 +72,6 @@ public class Main {
         // previously given data
         doctorsMap.put(newDoc.getDoctorID(), newDoc); // Add the created doctor in the doctors hashmap
     }
-
-
 
     public static Doctor chooseDoctor() { // Additional method created to avoid re-using code
         if (doctorsMap.isEmpty()) {
@@ -151,7 +150,7 @@ public class Main {
                     addDoctor();
                     break;
                 case "2":
-                    showAll(doctorsMap,"doctors");
+                    showAll(doctorsMap, "doctors");
                     break;
                 case "3":
                     showOneDoctor();
@@ -231,7 +230,7 @@ public class Main {
                     addPatient();
                     break;
                 case "2":
-                    showAll(patientsMap,"patients");
+                    showAll(patientsMap, "patients");
                     break;
                 case "3":
                     showOnePatient();
@@ -372,7 +371,7 @@ public class Main {
     }
 
     public static void showOneExam() {
-        showAll(examsMap,"exams");
+        showAll(examsMap, "exams");
         System.out.println("Choose a exam by inputting his ID: ");
         int ExamID = scanner.nextInt();
         scanner.nextLine(); // "Katharismos" grammhs logw tou nextInt
@@ -388,10 +387,10 @@ public class Main {
     public static void examsMenu() {
         boolean done = false;
         while (!done) {
-            System.out.println("1. Eisagwgh exetashs");
-            System.out.println("2. Emfanish olwn twn exetasewn");
-            System.out.println("3. Emfanish mias exetashs");
-            System.out.println("0. Epistrofh sto arxiko menu");
+            System.out.println("1. Enter exam");
+            System.out.println("2. See all exams");
+            System.out.println("3. See one exam");
+            System.out.println("0. Return to main menu");
             System.out.println("> ");
             String choice = scanner.nextLine();
             switch (choice) {
@@ -399,7 +398,7 @@ public class Main {
                     addExam();
                     break;
                 case "2":
-                    showAll(examsMap,"exams");
+                    showAll(examsMap, "exams");
                     break;
                 case "3":
                     showOneExam();
@@ -413,7 +412,7 @@ public class Main {
 
     public static void addAppointment() {
         System.out.println("Choose patient");
-        showAll(patientsMap,"patients");
+        showAll(patientsMap, "patients");
         System.out.println("Choose a patient by inputting their ID: ");
         int chosenPatientID = scanner.nextInt();
         scanner.nextLine(); // "Katharismos" grammhs logw tou nextInt
@@ -423,7 +422,7 @@ public class Main {
         }
         Patient chosenPatient = patientsMap.get(chosenPatientID);
         System.out.println("Choose Exam");
-        showAll(examsMap,"exams");
+        showAll(examsMap, "exams");
         System.out.println("Choose a exam by inputting their ID: ");
         int chosenExamId = scanner.nextInt();
         scanner.nextLine();
@@ -435,13 +434,13 @@ public class Main {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         boolean validDate = false;
         while (!validDate) {
-            System.out.println("Ημερομηνία (DD/MM/YYYY): ");
+            System.out.println("Date (DD/MM/YYYY): ");
             String examDate = scanner.nextLine();
             try {
                 LocalDate.parse(examDate, formatter); // an einai lathos -> exception
                 validDate = true;
             } catch (DateTimeParseException e) {
-                System.out.println("Λάθος μορφή ημερομηνίας. Δοκιμάστε ξανά.");
+                System.out.println("Invalid date format. Please try again.");
             }
         }
     }
@@ -467,7 +466,7 @@ public class Main {
                     addAppointment();
                     break;
                 case "2":
-                    showAll(appointmentsMap,"appointments");
+                    showAll(appointmentsMap, "appointments");
                     break;
                 case "3":
                     showPatientsAppointment();
@@ -483,7 +482,7 @@ public class Main {
     } // appointmentMenu
 
     public static void totalIncomePerPatient() {
-        showAll(patientsMap,"patients");
+        showAll(patientsMap, "patients");
         int totalIncomeFromAllPatients = 0;
 
         for (Patient patient : patientsMap.values()) {
@@ -501,11 +500,46 @@ public class Main {
     }
 
     public static void totalIncomePerExam() {
-        showAll(examsMap,"exams");
+        showAll(examsMap, "exams");
+        int totalIncomeFromAllExams = 0;
+
+        for (Exam exam : examsMap.values()) {
+            int totalIncomeFromExam = 0;
+            for (Appointment appointment : appointmentsMap.values()) {
+                if (appointment.getExamID() == exam.getExamID()) {
+                    totalIncomeFromExam += exam.getCost();
+                }
+            }
+            System.out.println("Total income from exam " + exam.getExamName() + ": " + totalIncomeFromExam);
+            totalIncomeFromAllExams += totalIncomeFromExam;
+        }
+        System.out.println("Total income from all exams: " + totalIncomeFromAllExams);
     }
 
     public static void totalIncomePerExamCategory() {
         showAllExamCategories();
+        int totalIncomeFromAllCategories = 0;
+
+        HashSet<String> categories = new HashSet<>();
+        for (Exam e : examsMap.values()) {
+            categories.add(e.getExamCategory());
+        }
+
+        for (String category : categories) {
+            int totalIncomeFromCategory = 0;
+            for (Exam exam : examsMap.values()) {
+                if (exam.getExamCategory().equals(category)) {
+                    for (Appointment appointment : appointmentsMap.values()) {
+                        if (appointment.getExamID() == exam.getExamID()) {
+                            totalIncomeFromCategory += exam.getCost();
+                        }
+                    }
+                }
+            }
+            System.out.println("Total income from exam category " + category + ": " + totalIncomeFromCategory);
+            totalIncomeFromAllCategories += totalIncomeFromCategory;
+        }
+        System.out.println("Total income from all exam categories: " + totalIncomeFromAllCategories);
     }
 
     public static void statisticsMenu() {
