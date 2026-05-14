@@ -3,6 +3,7 @@ import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.HashSet;
 
 public class Main {
     // Sylloges se hashmaps
@@ -26,17 +27,17 @@ public class Main {
         String specialtyInput = scanner.nextLine();
 
         String specialty;
-        switch(specialtyInput) {
+        switch (specialtyInput) {
             case "1":
                 specialty = "Cardiology";
                 break;
             case "2":
                 specialty = "Radiology";
                 break;
-            case  "3":
+            case "3":
                 specialty = "Microbiology";
                 break;
-            case  "4":
+            case "4":
                 specialty = "Neurology";
                 break;
             case "5":
@@ -51,7 +52,8 @@ public class Main {
         int years = scanner.nextInt();
         if (years < 0) {
             System.out.println("Invalid years of experience!");
-            return; // return to the main menu since we can't create a doctor without years of experience
+            return; // return to the main menu since we can't create a doctor without years of
+                    // experience
         }
 
         Doctor newDoc = new Doctor(name, phone, specialty, years); // Create a new doctor using the user's
@@ -204,7 +206,7 @@ public class Main {
         for (Appointment a : appointmentsMap.values()) {
             if (a.getPatientID() == patientID) {
                 System.out.println(a);
-                isInAppointment= true;
+                isInAppointment = true;
             }
         } // for
 
@@ -251,12 +253,12 @@ public class Main {
     public static void addExam() {
         System.out.println("First choose the lead doctor:");
         Doctor doctor = chooseDoctor();
-        if  (doctor == null) {
+        if (doctor == null) {
             return;
         }
 
         System.out.println("Give a name for the exam:");
-        String name =  scanner.nextLine();
+        String name = scanner.nextLine();
 
         System.out.println("Enter max slots per day:");
         int maxSlots = scanner.nextInt();
@@ -277,7 +279,7 @@ public class Main {
                 String machineTypeInput = scanner.nextLine();
                 String machineType;
 
-                switch(machineTypeInput) {
+                switch (machineTypeInput) {
                     case "1":
                         machineType = "MRI";
                         break;
@@ -292,7 +294,7 @@ public class Main {
                         return;
                 }
 
-                cost  = examCost();
+                cost = examCost();
                 newExam = new ImagingExam(cost, name, maxSlots, doctor.getDoctorID(), machineType);
                 break;
 
@@ -303,7 +305,7 @@ public class Main {
                 String sampleTypeInput = scanner.nextLine();
                 String sampleType;
 
-                switch(sampleTypeInput) {
+                switch (sampleTypeInput) {
                     case "1":
                         sampleType = "Blood";
                         break;
@@ -326,10 +328,10 @@ public class Main {
                 System.out.println("Available exam specialties:");
                 System.out.println("1. Cardiology\n2. Neurology\n3. Pulmonology");
                 System.out.println("Choose an exam specialty by inputting the corresponding number:");
-                String examSpecialtyInput =  scanner.nextLine();
+                String examSpecialtyInput = scanner.nextLine();
                 String examSpecialty;
 
-                switch(examSpecialtyInput) {
+                switch (examSpecialtyInput) {
                     case "1":
                         examSpecialty = "Cardiology";
                         break;
@@ -344,8 +346,8 @@ public class Main {
                         return;
                 }
 
-                cost  = examCost();
-                newExam = new SpecializedExam(cost, name,  maxSlots, doctor.getDoctorID(), examSpecialty);
+                cost = examCost();
+                newExam = new SpecializedExam(cost, name, maxSlots, doctor.getDoctorID(), examSpecialty);
                 break;
             default:
                 System.out.println("Invalid input!");
@@ -362,8 +364,20 @@ public class Main {
         }
     }
 
-    //TODO DEN TREXH
-    public static void showOneExam(){
+    public static void showAllExamCategories() {
+        HashSet<String> categories = new HashSet<>();
+
+        for (Exam e : examsMap.values()) {
+            categories.add(e.getExamCategory());
+        }
+
+        for (String category : categories) {
+            System.out.println(category);
+        }
+    }
+
+    // TODO DEN TREXH
+    public static void showOneExam() {
         if (examsMap.isEmpty()) {
             System.out.println("There are no Exams.");
             return;
@@ -378,9 +392,9 @@ public class Main {
             return;
         }
         System.out.println("Exams information: " + exam.toString());
-      
 
     }
+
     public static void examsMenu() {
         boolean done = false;
         while (!done) {
@@ -392,12 +406,12 @@ public class Main {
             String choice = scanner.nextLine();
             switch (choice) {
                 case "1":
-                   // addExam();
+                    // addExam();
                     break;
-                case"2":
+                case "2":
                     showAllExams();
                     break;
-                case"3":
+                case "3":
                     showOneExam();
                     break;
                 case "0":
@@ -406,7 +420,8 @@ public class Main {
             }
         }
     }
-    public static void addAppointment(){
+
+    public static void addAppointment() {
         System.out.println("Choose patient");
         if (patientsMap.isEmpty()) {
             System.out.println("No patients available.");
@@ -422,7 +437,7 @@ public class Main {
         }
         Patient chosenPatient = patientsMap.get(chosenPatientID);
         System.out.println("Choose Exam");
-        if(examsMap.isEmpty()){
+        if (examsMap.isEmpty()) {
             System.out.println("There are no exams");
             return;
         }
@@ -430,7 +445,7 @@ public class Main {
         System.out.println("Choose a exam by inputting their ID: ");
         int chosenExamId = scanner.nextInt();
         scanner.nextLine();
-        if(!examsMap.containsKey(chosenExamId)){
+        if (!examsMap.containsKey(chosenExamId)) {
             System.out.println("There is no exam with this id");
             return;
         }
@@ -449,15 +464,17 @@ public class Main {
         }
     }
 
-    public static void showAllAppointments(){
-         for (Appointment a : appointmentsMap.values()) {
+    public static void showAllAppointments() {
+        for (Appointment a : appointmentsMap.values()) {
             System.out.println(a);
         }
     }
 
-    public static void showPatientsAppointment(){}
+    public static void showPatientsAppointment() {
+    }
 
-    public static void deleteAppointment(){}
+    public static void deleteAppointment() {
+    }
 
     public static void appointmentMenu() {
         boolean done = false;
@@ -489,9 +506,59 @@ public class Main {
         } // while
     } // appointmentMenu
 
-    public static void statisticsMenu () {}
+    public static void totalIncomePerPatient() {
+        showAllPatients();
+        int totalIncomeFromAllPatients = 0;
 
-    public static void main (String[]args){
+        for (Patient patient : patientsMap.values()) {
+            int totalIncomeFromPatient = 0;
+            for (Appointment appointment : appointmentsMap.values()) {
+                if (appointment.getPatientID() == patient.getPatientID()) {
+                    Exam exam = examsMap.get(appointment.getExamID());
+                    totalIncomeFromPatient += exam.getCost();
+                }
+            }
+            System.out.println("Total income from patient " + patient.getPatientName() + ": " + totalIncomeFromPatient);
+            totalIncomeFromAllPatients += totalIncomeFromPatient;
+        }
+        System.out.println("Total income from all patients: " + totalIncomeFromAllPatients);
+    }
+
+    public static void totalIncomePerExam() {
+        showAllExams();
+    }
+
+    public static void totalIncomePerExamCategory() {
+        showAllExamCategories();
+    }
+
+    public static void statisticsMenu() {
+        boolean done = false;
+        while (!done) {
+            System.out.println("1. Total income per patient");
+            System.out.println("2. Total income per exam");
+            System.out.println("3. Total income per exam category");
+            System.out.println("0. Return to main menu");
+            System.out.println("> ");
+            String choice = scanner.nextLine();
+            switch (choice) {
+                case "1":
+                    totalIncomePerPatient();
+                    break;
+                case "2":
+                    totalIncomePerExam();
+                    break;
+                case "3":
+                    totalIncomePerExamCategory();
+                    break;
+                case "0":
+                    done = true;
+                    break;
+            } // switch
+        } // while
+    } // statsMenu
+
+    public static void main(String[] args) {
         boolean done = false;
         while (!done) {
             System.out.println("\n1. Doctors");
@@ -525,4 +592,3 @@ public class Main {
         } // while
     } // main
 } // Class
-
