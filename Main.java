@@ -406,7 +406,7 @@ public class Main {
             String choice = scanner.nextLine();
             switch (choice) {
                 case "1":
-                    // addExam();
+                    addExam();
                     break;
                 case "2":
                     showAllExams();
