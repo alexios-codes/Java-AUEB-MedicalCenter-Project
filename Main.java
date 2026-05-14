@@ -12,6 +12,16 @@ public class Main {
     private static HashMap<Integer, Exam> examsMap = new HashMap<>();
     private static HashMap<Integer, Appointment> appointmentsMap = new HashMap<>();
     static Scanner scanner = new Scanner(System.in);
+    //voithitikh methodos gia na mikrini o kodikas
+    public static void showAll(HashMap<Integer, ?> map, String type) {
+        if (map.isEmpty()) {
+            System.out.println("Δεν υπάρχουν " + type + ".");
+            return;
+        }
+        for (Object obj : map.values()) {
+            System.out.println(obj.toString());
+        }
+    }
 
     // Doctor menu methods
     public static void addDoctor() { // Create a new doctor and add to the hashmap
@@ -50,6 +60,7 @@ public class Main {
 
         System.out.println("Doctor's years of experience: ");
         int years = scanner.nextInt();
+        scanner.nextLine();
         if (years < 0) {
             System.out.println("Invalid years of experience!");
             return; // return to the main menu since we can't create a doctor without years of
@@ -61,11 +72,7 @@ public class Main {
         doctorsMap.put(newDoc.getDoctorID(), newDoc); // Add the created doctor in the doctors hashmap
     }
 
-    public static void showAllDoctors() {
-        for (Doctor d : doctorsMap.values()) {
-            System.out.println(d.toString());
-        }
-    }
+
 
     public static Doctor chooseDoctor() { // Additional method created to avoid re-using code
         if (doctorsMap.isEmpty()) {
@@ -144,7 +151,7 @@ public class Main {
                     addDoctor();
                     break;
                 case "2":
-                    showAllDoctors();
+                    showAll(doctorsMap,"doctors");
                     break;
                 case "3":
                     showOneDoctor();
@@ -173,12 +180,6 @@ public class Main {
         Patient newPatient = new Patient(name, phone, mail); // Create a new patient using the user's
         // previously given data
         patientsMap.put(newPatient.getPatientID(), newPatient); // Add the created patient to the patients hashmap
-    }
-
-    public static void showAllPatients() {
-        for (Patient p : patientsMap.values()) {
-            System.out.println(p.toString());
-        }
     }
 
     public static void showOnePatient() {
@@ -230,7 +231,7 @@ public class Main {
                     addPatient();
                     break;
                 case "2":
-                    showAllPatients();
+                    showAll(patientsMap,"patients");
                     break;
                 case "3":
                     showOnePatient();
@@ -358,12 +359,6 @@ public class Main {
         }
     } // addExam
 
-    public static void showAllExams() {
-        for (Exam e : examsMap.values()) {
-            System.out.println(e);
-        }
-    }
-
     public static void showAllExamCategories() {
         HashSet<String> categories = new HashSet<>();
 
@@ -376,13 +371,12 @@ public class Main {
         }
     }
 
-    // TODO DEN TREXH
     public static void showOneExam() {
         if (examsMap.isEmpty()) {
             System.out.println("There are no Exams.");
             return;
         }
-        showAllExams();
+        showAll(examsMap,"exams");
         System.out.println("Choose a exam by inputting his ID: ");
         int ExamID = scanner.nextInt();
         scanner.nextLine(); // "Katharismos" grammhs logw tou nextInt
@@ -409,7 +403,7 @@ public class Main {
                     addExam();
                     break;
                 case "2":
-                    showAllExams();
+                    showAll(examsMap,"exams");
                     break;
                 case "3":
                     showOneExam();
@@ -427,7 +421,7 @@ public class Main {
             System.out.println("No patients available.");
             return;
         }
-        showAllPatients();
+        showAll(patientsMap,"patients");
         System.out.println("Choose a patient by inputting their ID: ");
         int chosenPatientID = scanner.nextInt();
         scanner.nextLine(); // "Katharismos" grammhs logw tou nextInt
@@ -441,7 +435,7 @@ public class Main {
             System.out.println("There are no exams");
             return;
         }
-        showAllExams();
+        showAll(examsMap,"exams");
         System.out.println("Choose a exam by inputting their ID: ");
         int chosenExamId = scanner.nextInt();
         scanner.nextLine();
@@ -461,12 +455,6 @@ public class Main {
             } catch (DateTimeParseException e) {
                 System.out.println("Λάθος μορφή ημερομηνίας. Δοκιμάστε ξανά.");
             }
-        }
-    }
-
-    public static void showAllAppointments() {
-        for (Appointment a : appointmentsMap.values()) {
-            System.out.println(a);
         }
     }
 
@@ -491,7 +479,7 @@ public class Main {
                     addAppointment();
                     break;
                 case "2":
-                    showAllAppointments();
+                    showAll(appointmentsMap,"appointments");
                     break;
                 case "3":
                     showPatientsAppointment();
@@ -507,7 +495,7 @@ public class Main {
     } // appointmentMenu
 
     public static void totalIncomePerPatient() {
-        showAllPatients();
+        showAll(patientsMap,"patients");
         int totalIncomeFromAllPatients = 0;
 
         for (Patient patient : patientsMap.values()) {
@@ -525,7 +513,7 @@ public class Main {
     }
 
     public static void totalIncomePerExam() {
-        showAllExams();
+        showAll(examsMap,"exams");
     }
 
     public static void totalIncomePerExamCategory() {
