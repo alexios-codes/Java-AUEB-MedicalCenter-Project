@@ -472,10 +472,10 @@ public class Main {
         String fastInput = scanner.nextLine();
         boolean fastResults = fastInput.equals("2");
 
-        Appointment newAppointment = new Appointment(chosenPatient.getPatientID(), chosenExam.getExamID(), fastResults, examDate);
+        Appointment newAppointment = new Appointment(chosenPatient.getPatientID(), chosenExam.getExamID(), fastResults,
+                examDate);
         appointmentsMap.put(newAppointment.getAppointmentID(), newAppointment);
     }
-
 
     public static void showPatientsAppointment() {
         if (patientsMap.isEmpty()) {
@@ -507,13 +507,13 @@ public class Main {
             System.out.println("The patient does not have any appointments.");
         }
     }
-    
+
     public static void deleteAppointment() {
         if (appointmentsMap.isEmpty()) {
             System.out.println("There are no appointments.");
             return;
         }
-        showAll(appointmentsMap,"appointments");
+        showAll(appointmentsMap, "appointments");
         System.out.println("Chose which appointment you want to delete by giving its ID");
         int deleteID = scanner.nextInt();
         scanner.nextLine();
@@ -522,7 +522,7 @@ public class Main {
         }
         System.out.println("Are you sure you want to delete this appointment 1.YES/2.NO");
         String choice = scanner.nextLine();
-        if(choice.equals("1") || choice.equals("YES") || choice.equals("yes")){
+        if (choice.equals("1") || choice.equals("YES") || choice.equals("yes")) {
             appointmentsMap.remove(deleteID);
             System.out.println("Appointment deleted!");
 
@@ -568,14 +568,17 @@ public class Main {
             for (Appointment appointment : appointmentsMap.values()) {
                 if (appointment.getPatientID() == patient.getPatientID()) {
                     Exam exam = examsMap.get(appointment.getExamID());
+                    System.out.println("Exam: " + exam.getExamName() + " Cost: " + exam.getCost());
                     totalIncomeFromPatient += exam.getCost();
-                }
-            }
+
+                    System.out.println(appointment.toString());
+                } // check if the appointment belongs to the patient
+            } // for loop for appointments
             System.out.println("Total income from patient " + patient.getPatientName() + ": " + totalIncomeFromPatient);
             totalIncomeFromAllPatients += totalIncomeFromPatient;
-        }
+        } // for loop for patients
         System.out.println("Total income from all patients: " + totalIncomeFromAllPatients);
-    }
+    } // totalIncomePerPatient
 
     public static void totalIncomePerExam() {
         showAll(examsMap, "exams");
@@ -583,12 +586,21 @@ public class Main {
 
         for (Exam exam : examsMap.values()) {
             int totalIncomeFromExam = 0;
+            int totalAppointmentsForExam = 0;
+            int examCost = exam.getCost();
+            int totalIncomeFromExamAppointments = 0;
             for (Appointment appointment : appointmentsMap.values()) {
                 if (appointment.getExamID() == exam.getExamID()) {
                     totalIncomeFromExam += exam.getCost();
+                    totalAppointmentsForExam++;
+
+                    System.out.println(appointment.toString());
                 }
             }
+            totalIncomeFromExamAppointments = totalAppointmentsForExam * examCost;
             System.out.println("Total income from exam " + exam.getExamName() + ": " + totalIncomeFromExam);
+            System.out.println("Total income from appointments for exam " + exam.getExamName() + ": "
+                    + totalIncomeFromExamAppointments);
             totalIncomeFromAllExams += totalIncomeFromExam;
         }
         System.out.println("Total income from all exams: " + totalIncomeFromAllExams);
@@ -610,6 +622,8 @@ public class Main {
                     for (Appointment appointment : appointmentsMap.values()) {
                         if (appointment.getExamID() == exam.getExamID()) {
                             totalIncomeFromCategory += exam.getCost();
+
+                            System.out.println(appointment.toString());
                         }
                     }
                 }
