@@ -371,13 +371,17 @@ public class Main {
     }
 
     public static void showOneExam() {
+        if (examsMap.isEmpty()) {
+            System.out.println("No exams available.");
+            return;
+        }
         showAll(examsMap, "exams");
         System.out.println("Choose a exam by inputting his ID: ");
         int ExamID = scanner.nextInt();
         scanner.nextLine(); // "Katharismos" grammhs logw tou nextInt
         Exam exam = examsMap.get(ExamID);
         if (!examsMap.containsKey(ExamID)) {
-            System.out.println("There is no examwith the given ID!");
+            System.out.println("There is no exam with the given ID!");
             return;
         }
         System.out.println("Exams information: " + exam.toString());
@@ -411,6 +415,11 @@ public class Main {
     }
 
     public static void addAppointment() {
+
+        if (patientsMap.isEmpty()) {
+            System.out.println("No patients available.");
+            return;
+        }
         System.out.println("Choose patient");
         showAll(patientsMap, "patients");
         System.out.println("Choose a patient by inputting their ID: ");
@@ -422,6 +431,10 @@ public class Main {
         }
         Patient chosenPatient = patientsMap.get(chosenPatientID);
         System.out.println("Choose Exam");
+        if (examsMap.isEmpty()) {
+            System.out.println("No exams available.");
+            return;
+        }
         showAll(examsMap, "exams");
         System.out.println("Choose a exam by inputting their ID: ");
         int chosenExamId = scanner.nextInt();
@@ -432,10 +445,11 @@ public class Main {
         }
         Exam chosenExam = examsMap.get(chosenExamId);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String examDate = "";
         boolean validDate = false;
         while (!validDate) {
             System.out.println("Date (DD/MM/YYYY): ");
-            String examDate = scanner.nextLine();
+            examDate = scanner.nextLine();
             try {
                 LocalDate.parse(examDate, formatter); // an einai lathos -> exception
                 validDate = true;
@@ -443,10 +457,59 @@ public class Main {
                 System.out.println("Invalid date format. Please try again.");
             }
         }
+        int count = 0;
+        for (Appointment a : appointmentsMap.values()) {
+            if (a.getExamID() == chosenExam.getExamID() && a.getExamDate().equals(examDate)) {
+                count++;
+            }
+        }
+        if (count >= chosenExam.getMaxSlotsPerDay()) {
+            System.out.println("There are no available slots for this date");
+            return;
+        }
+
+        System.out.println("Fast results? (1. Yes / 2. No)");
+        String fastInput = scanner.nextLine();
+        boolean fastResults = fastInput.equals("1");
+
+        Appointment newAppointment = new Appointment(chosenPatient.getPatientID(), chosenExam.getExamID(), fastResults, examDate);
+        appointmentsMap.put(newAppointment.getAppointmentID(), newAppointment);
     }
 
+
     public static void showPatientsAppointment() {
+        if (patientsMap.isEmpty()) {
+            System.out.println("There are no patients.");
+            return;
+        }
+        for (Patient p : patientsMap.values()) {
+            System.out.println("Name: " + p.getPatientName() + " ID: " + p.getPatientID());// Showing just the names
+            // and ID's of each patient, not all the information
+        }
+        System.out.println("Choose a patient by inputting his ID: ");
+        int patientID = scanner.nextInt();
+        scanner.nextLine(); // "Clean" the new line left by the nextInt
+        Patient patient = patientsMap.get(patientID);
+        if (!patientsMap.containsKey(patientID)) {
+            System.out.println("There is no patient with the given ID!");
+            return;
+        }
+        System.out.println("The patient has the following appointments: ");
+        boolean isInAppointment = false;
+        for (Appointment a : appointmentsMap.values()) {
+            if (a.getPatientID() == patientID) {
+                System.out.println(a);
+                isInAppointment = true;
+            }
+        } // for
+
+        if (!isInAppointment) {
+            System.out.println("The patient does not have any appointments.");
+        }
     }
+
+
+
 
     public static void deleteAppointment() {
     }
