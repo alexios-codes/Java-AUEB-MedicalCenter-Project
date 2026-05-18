@@ -16,7 +16,7 @@ public class Main {
     // voithitikh methodos gia na mikrini o kodikas
     public static void showAll(HashMap<Integer, ?> map, String type) {
         if (map.isEmpty()) {
-            System.out.println("Δεν υπάρχουν " + type + ".");
+            System.out.println("There are no " + type + ".");
             return;
         }
         for (Object obj : map.values()) {
@@ -470,7 +470,7 @@ public class Main {
 
         System.out.println("Fast results? (1. Yes / 2. No)");
         String fastInput = scanner.nextLine();
-        boolean fastResults = fastInput.equals("1");
+        boolean fastResults = fastInput.equals("2");
 
         Appointment newAppointment = new Appointment(chosenPatient.getPatientID(), chosenExam.getExamID(), fastResults, examDate);
         appointmentsMap.put(newAppointment.getAppointmentID(), newAppointment);
@@ -507,11 +507,26 @@ public class Main {
             System.out.println("The patient does not have any appointments.");
         }
     }
-
-
-
-
+    
     public static void deleteAppointment() {
+        if (appointmentsMap.isEmpty()) {
+            System.out.println("There are no appointments.");
+            return;
+        }
+        showAll(appointmentsMap,"appointments");
+        System.out.println("Chose which appointment you want to delete by giving its ID");
+        int deleteID = scanner.nextInt();
+        scanner.nextLine();
+        if (!appointmentsMap.containsKey(deleteID)) {
+            System.out.println("There is no appointment with this id");
+        }
+        System.out.println("Are you sure you want to delete this appointment 1.YES/2.NO");
+        String choice = scanner.nextLine();
+        if(choice.equals("1") || choice.equals("YES") || choice.equals("yes")){
+            appointmentsMap.remove(deleteID);
+            System.out.println("Appointment deleted!");
+
+        }
     }
 
     public static void appointmentMenu() {
