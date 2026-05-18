@@ -1,19 +1,27 @@
 public class Doctor {
 
     private static int idCounter = 1;
-
     private int doctorID;
     private int years;
     private String doctorName;
     private String doctorPhone;
     private String speciality ;
-
-    public Doctor(String doctorName,String doctorPhone,String speciality,int years) {
+    //constructor gia dilosis
+    public Doctor(String doctorName, String doctorPhone, String speciality, int years) {
         this.doctorID = idCounter++;
+        this.doctorName = doctorName;
+        this.doctorPhone = doctorPhone;
+        this.speciality = speciality;
+        this.years = years;
+    }
+//constructor gia arxeia
+    public Doctor(int id,String doctorName,String doctorPhone,String speciality,int years) {
+        this.doctorID=id;
         this.doctorName = doctorName;
         this.doctorPhone=doctorPhone;
         this.speciality=speciality;
         this.years=years;
+        if (id >= idCounter) idCounter = id + 1;
     }
 
     // getters

@@ -7,15 +7,25 @@ public abstract class Exam{
     private int maxSlotsPerDay;
     private int cost;
     private int leadDoctorID;
-
-
-    public Exam(int cost,String ExamCategory,String ExamName,int maxSlotsPerDay,int leadDoctorID){
+    //constructor gia otan diloni
+    public Exam(int cost, String ExamCategory, String ExamName, int maxSlotsPerDay, int leadDoctorID) {
         this.ExamID = idCounter++;
+        this.ExamCategory = ExamCategory;
+        this.ExamName = ExamName;
+        this.maxSlotsPerDay = maxSlotsPerDay;
+        this.leadDoctorID = leadDoctorID;
+        this.cost = cost;
+    }
+
+//constructor gia arxeia
+    public Exam(int id,int cost,String ExamCategory,String ExamName,int maxSlotsPerDay,int leadDoctorID){
+        this.ExamID = id;
         this.ExamCategory = ExamCategory;
         this.ExamName=ExamName;
         this.maxSlotsPerDay=maxSlotsPerDay;
         this.leadDoctorID=leadDoctorID;
         this.cost=cost;
+        if (id >= idCounter) idCounter = id + 1;
     }
 
     // getters

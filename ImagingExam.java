@@ -1,8 +1,14 @@
 public class ImagingExam extends Exam {
     private String machineType;
     private final double costIncreaseRate = 0.10;
-    public ImagingExam(int cost,String ExamName,int maxSlotsPerDay,int leadDoctorID,String machineType) {
-        super(cost,"Imaging",ExamName,maxSlotsPerDay,leadDoctorID);
+//constructor gia dilosis
+    public ImagingExam(int cost, String ExamName, int maxSlotsPerDay, int leadDoctorID, String machineType) {
+        super(cost, "Imaging", ExamName, maxSlotsPerDay, leadDoctorID);
+        this.machineType = machineType;
+    }
+//constructor gia arxeia
+    public ImagingExam(int id,int cost,String ExamName,int maxSlotsPerDay,int leadDoctorID,String machineType) {
+        super(id,cost,"Imaging",ExamName,maxSlotsPerDay,leadDoctorID);
         this.machineType=machineType;
     }
 

@@ -7,6 +7,7 @@ import java.util.HashSet;
 
 public class Main {
     // Sylloges se hashmaps
+    static fileManager fm = new fileManager();
     private static HashMap<Integer, Doctor> doctorsMap = new HashMap<>();
     private static HashMap<Integer, Patient> patientsMap = new HashMap<>();
     private static HashMap<Integer, Exam> examsMap = new HashMap<>();
@@ -661,6 +662,7 @@ public class Main {
     } // statsMenu
 
     public static void main(String[] args) {
+        fm.loadData(doctorsMap, patientsMap, examsMap, appointmentsMap);
         boolean done = false;
         while (!done) {
             System.out.println("\n1. Doctors");
@@ -688,6 +690,7 @@ public class Main {
                     statisticsMenu();
                     break;
                 case "0":
+                    fm.saveData(doctorsMap, patientsMap, examsMap, appointmentsMap);
                     done = true;
                     break;
             } // switch

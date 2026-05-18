@@ -5,11 +5,20 @@ public class Patient {
     private String patientName ;
     private String patientPhone;
     private String email;
-    public Patient(String patientName,String patientPhone,String email){
+    //constructor gia dilosis
+    public Patient(String patientName, String patientPhone, String email) {
         this.patientID = idCounter++;
+        this.patientName = patientName;
+        this.patientPhone = patientPhone;
+        this.email = email;
+    }
+    //constructor gia arxeia
+    public Patient(int id,String patientName,String patientPhone,String email){
+        this.patientID = id;
         this.patientName = patientName;
         this.patientPhone=patientPhone;
         this.email=email;
+        if (id >= idCounter) idCounter = id + 1;
 
     }
 

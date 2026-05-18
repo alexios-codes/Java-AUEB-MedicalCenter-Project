@@ -1,9 +1,14 @@
 public class SpecializedExam extends Exam {
     private String examSpecialty;
     private final double costIncreaseRate = 0.30;
- 
+ //constructor gia dilosis
     public SpecializedExam(int cost, String ExamName, int maxSlotsPerDay, int leadDoctorID, String examSpecialty) {
         super(cost, "Specialized", ExamName, maxSlotsPerDay, leadDoctorID);
+        this.examSpecialty = examSpecialty;
+    }
+    //constructor gia arxeia
+    public SpecializedExam(int id, int cost, String ExamName, int maxSlotsPerDay, int leadDoctorID, String examSpecialty) {
+        super(id, cost, "Specialized", ExamName, maxSlotsPerDay, leadDoctorID);
         this.examSpecialty = examSpecialty;
     }
 

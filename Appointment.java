@@ -2,19 +2,28 @@
     public class Appointment {
  
     private static int idCounter = 1;
- 
     private int appointmentID;
     private int patientID;
     private int examID;
     private boolean fastResults;
     private String examDate;
- 
+    //constructor gia dilosis
     public Appointment(int patientID, int examID, boolean fastResults, String examDate) {
-        this.appointmentID = idCounter++;
+            this.appointmentID = idCounter++;
+            this.patientID = patientID;
+            this.examID = examID;
+            this.fastResults = fastResults;
+            this.examDate = examDate;
+        }
+ // constructor gia arxeia
+    public Appointment(int id,int patientID, int examID, boolean fastResults, String examDate) {
+        this.appointmentID = id;
         this.patientID = patientID;
         this.examID = examID;
         this.fastResults = fastResults;
         this.examDate = examDate;
+        if (id >= idCounter) idCounter = id + 1;
+
     }
 
     // getters
