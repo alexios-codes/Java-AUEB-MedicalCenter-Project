@@ -527,6 +527,8 @@ public class Main {
             appointmentsMap.remove(deleteID);
             System.out.println("Appointment deleted!");
 
+        }else if(choice.equals("2") || choice.equals("NO") || choice.equals("no")){
+            System.out.println("Deletion canceled");
         }
     }
 
