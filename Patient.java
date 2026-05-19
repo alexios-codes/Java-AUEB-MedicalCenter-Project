@@ -37,6 +37,7 @@ public class Patient {
     }
 
 
+
     public String toString() {
         return "Kwdikos asthenh: " + patientID + " | Onoma asthenh: " + patientName + " | Thlefwno asthenh: " + patientPhone
                 + " | Email asthenh: " + email;

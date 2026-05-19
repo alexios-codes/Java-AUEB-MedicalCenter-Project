@@ -4,15 +4,17 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.HashSet;
+import java.io.*;
 
 public class Main {
     // Sylloges se hashmaps
-    static fileManager fm = new fileManager();
     private static HashMap<Integer, Doctor> doctorsMap = new HashMap<>();
     private static HashMap<Integer, Patient> patientsMap = new HashMap<>();
     private static HashMap<Integer, Exam> examsMap = new HashMap<>();
     private static HashMap<Integer, Appointment> appointmentsMap = new HashMap<>();
     static Scanner scanner = new Scanner(System.in);
+    static fileManager fm = new fileManager();
+
 
     // voithitikh methodos gia na mikrini o kodikas
     public static void showAll(HashMap<Integer, ?> map, String type) {
@@ -663,8 +665,70 @@ public class Main {
         } // while
     } // statsMenu
 
+
     public static void main(String[] args) {
-        fm.loadData(doctorsMap, patientsMap, examsMap, appointmentsMap);
+        String filePathDoc = "Doctor.txt";
+        String filePathPatient = "Patient.txt";
+        String filePathAppointment = "Appointment.txt";
+        String filePathExam = "Exam.txt";
+
+        File fileDoc = new File(filePathDoc);
+        File filePatient = new File(filePathPatient);
+        File fileAppointment = new File(filePathAppointment);
+        File fileExam = new File(filePathExam);
+        if (!fileDoc.exists()) {
+            // default doctors
+            Doctor d1 = new Doctor("D1", "111", "Cardiology", 10);
+            Doctor d2 = new Doctor("D2", "222", "Radiology", 8);
+            Doctor d3 = new Doctor("D3", "333", "Microbiology", 3);
+            Doctor d4 = new Doctor("D4", "444", "Neurology", 2);
+            doctorsMap.put(d1.getDoctorID(), d1);
+            doctorsMap.put(d2.getDoctorID(), d2);
+            doctorsMap.put(d3.getDoctorID(), d3);
+            doctorsMap.put(d4.getDoctorID(), d4);
+        } else {
+            fm.loadDoctors(doctorsMap);
+        }
+
+        if (!filePatient.exists()) {
+            // default patients
+            Patient p1 = new Patient("P1", "6901", "a@a.com");
+            Patient p2 = new Patient("P2", "6902", "b@b.com");
+            Patient p3 = new Patient("P3", "6903", "c@c.com");
+            patientsMap.put(p1.getPatientID(), p1);
+            patientsMap.put(p2.getPatientID(), p2);
+            patientsMap.put(p3.getPatientID(), p3);
+        } else {
+            fm.loadPatients(patientsMap);
+        }
+
+        /*if (!fileExam.exists()) {
+            Exam e1 = new ImagingExam(30, "XRAY", 10, 2, "X-Ray");
+            Exam e2 = new MicrobiologicalExam(20, "PCR", 20, 3, "Blood");
+            Exam e3 = new SpecializedExam(80, "Stress", 3, 1, "Cardiology");
+            Exam e4 = new SpecializedExam(50, "Holter", 5, 1, "Cardiology");
+            Exam e5 = new SpecializedExam(20, "EEG", 10, 4, "Neurology");
+            examsMap.put(e1.getExamID(), e1);
+            examsMap.put(e2.getExamID(), e2);
+            examsMap.put(e3.getExamID(), e3);
+            examsMap.put(e4.getExamID(), e4);
+            examsMap.put(e5.getExamID(), e5);
+        } else {
+            fm.loadExams(examsMap);
+        }*/
+
+        if (!fileAppointment.exists()) {
+            Appointment a1 = new Appointment(1, 1, true, "10/05/2026");
+            Appointment a2 = new Appointment(2, 2, false, "16/05/2026");
+            Appointment a3 = new Appointment(1, 2, false, "11/05/2026");
+            Appointment a4 = new Appointment(1, 3, true, "16/05/2026");
+            appointmentsMap.put(a1.getAppointmentID(), a1);
+            appointmentsMap.put(a2.getAppointmentID(), a2);
+            appointmentsMap.put(a3.getAppointmentID(), a3);
+            appointmentsMap.put(a4.getAppointmentID(), a4);
+        } else {
+            fm.loadAppointments(appointmentsMap);
+        }
         boolean done = false;
         while (!done) {
             System.out.println("\n1. Doctors");

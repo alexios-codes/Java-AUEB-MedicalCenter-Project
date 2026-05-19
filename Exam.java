@@ -29,7 +29,7 @@ public abstract class Exam{
     }
 
     // getters
-    public int getExamID() {
+    public  int getExamID() {
         return ExamID;
     }
     public String getExamCategory() {
@@ -47,6 +47,7 @@ public abstract class Exam{
     public int getLeadDoctor(){
         return leadDoctorID;
     }
+
 
     public abstract double getFinalCost(boolean fastResults); // για να υπολογίζεται το τελικό κόστος στις υποκλάσεις
 
