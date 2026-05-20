@@ -1,46 +1,50 @@
 public class Patient {
-    private static int idCounter = 1 ;
+    private static int idCounter = 1;
 
     private int patientID;
-    private String patientName ;
+    private String patientName;
     private String patientPhone;
     private String email;
-    //constructor gia dilosis
+
+    // constructor gia dilosis
     public Patient(String patientName, String patientPhone, String email) {
         this.patientID = idCounter++;
         this.patientName = patientName;
         this.patientPhone = patientPhone;
         this.email = email;
     }
-    //constructor gia arxeia
-    public Patient(int id,String patientName,String patientPhone,String email){
+
+    // constructor gia arxeia
+    public Patient(int id, String patientName, String patientPhone, String email) {
         this.patientID = id;
         this.patientName = patientName;
-        this.patientPhone=patientPhone;
-        this.email=email;
-        if (id >= idCounter) idCounter = id + 1;
+        this.patientPhone = patientPhone;
+        this.email = email;
+        if (id >= idCounter)
+            idCounter = id + 1;
 
     }
 
-    //getters
+    // getters
     public int getPatientID() {
         return patientID;
     }
+
     public String getPatientName() {
         return patientName;
     }
+
     public String getPatientPhone() {
         return patientPhone;
     }
+
     public String getEmail() {
         return email;
     }
 
-
-
     public String toString() {
-        return "Kwdikos asthenh: " + patientID + " | Onoma asthenh: " + patientName + " | Thlefwno asthenh: " + patientPhone
-                + " | Email asthenh: " + email;
+        return "Patient ID: " + patientID + " | Name: " + patientName + " | Phone: " + patientPhone
+                + " | Email: " + email;
     }
-    
+
 }
