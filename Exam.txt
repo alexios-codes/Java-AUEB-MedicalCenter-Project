@@ -1,9 +1,0 @@
-Imaging,1,XRAY,X-Ray,10,30,2
-Imaging,2,MRI Scan,MRI,5,50,1
-Imaging,3,CT Scan,CT,8,40,3
-Microbiological,4,PCR,Blood,20,20,3
-Microbiological,5,Urine Test,Urine,15,15,2
-Microbiological,6,Covid Test,Swab,10,25,1
-Specialized,7,Holter,Cardiology,5,50,1
-Specialized,8,EEG,Neurology,10,20,4
-Specialized,9,SPT,Pulmonology,8,30,2
