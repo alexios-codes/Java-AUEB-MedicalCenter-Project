@@ -525,6 +525,7 @@ public class Main {
         int deleteID = Integer.parseInt(scanner.nextLine());
         if (!appointmentsMap.containsKey(deleteID)) {
             System.out.println("There is no appointment with this ID!");
+            return;
         }
         System.out.println("Are you sure you want to delete this appointment 1.YES/2.NO");
         String choice = scanner.nextLine();
