@@ -32,8 +32,8 @@ public class fileManager{
     } //loadDoctors
 
     public void loadPatients(HashMap<Integer, Patient> patientsMap){
-        try (BufferedReader reader = new BufferedReader(new FileReader("Patient.txt"))) { // In order
-        // to automatically close the file after
+        // In order to automatically close the file after
+        try (BufferedReader reader = new BufferedReader(new FileReader("Patient.txt"))) {
 
             String line;
 
@@ -60,8 +60,8 @@ public class fileManager{
     } // loadPatients
 
     public void loadExams(HashMap<Integer, Exam> examsMap) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("Exam.txt"))) { // In order
-            // to automatically close the file after
+        // In order to automatically close the file after
+        try (BufferedReader reader = new BufferedReader(new FileReader("Exam.txt"))) {
             String line;
 
             while ((line = reader.readLine()) != null) { // Read the file line by line
@@ -106,8 +106,8 @@ public class fileManager{
 
 
     public void loadAppointments(HashMap<Integer, Appointment> appointmentsMap){
-        try (BufferedReader reader = new BufferedReader(new FileReader("Appointment.txt"))) { // In order
-            // to automatically close the file after
+        // In order to automatically close the file after
+        try (BufferedReader reader = new BufferedReader(new FileReader("Appointment.txt"))) {
 
             String line;
 
@@ -126,8 +126,8 @@ public class fileManager{
                         Boolean.parseBoolean(tokens[3]),
                         tokens[4]
                 );
-                appointmentsMap.put(appointment.getAppointmentID(), appointment); // Put the previously created object
-                // in the appointments hashmap
+                // Put the previously created object in the appointments hashmap
+                appointmentsMap.put(appointment.getAppointmentID(), appointment);
             } // while
 
     } catch (IOException e) {
@@ -135,8 +135,8 @@ public class fileManager{
         }
     } // loadAppointments
 
-    public void saveData(HashMap<Integer, Doctor> doctorsMap, // Save all the data from the hashmaps into the
-                         // corresponding files
+    // Save all the data from the hashmaps into the corresponding files
+    public void saveData(HashMap<Integer, Doctor> doctorsMap,
                          HashMap<Integer, Patient> patientsMap,
                          HashMap<Integer, Exam> examsMap,
                          HashMap<Integer, Appointment> appointmentsMap){
@@ -147,8 +147,9 @@ public class fileManager{
     } // saveData
 
     private void saveDoctors(HashMap<Integer, Doctor> doctorsMap){
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Doctor.txt"))) { // In order to automatically
-            // close the file after
+        // In order to automatically close the file after
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Doctor.txt"))) {
+
             for (Doctor doctor: doctorsMap.values()) { // Write each doctor's details in the file
 
                 writer.write(doctor.getDoctorID() + ","
@@ -166,8 +167,9 @@ public class fileManager{
     } // saveDoctors
 
     private void savePatients(HashMap<Integer, Patient> patientsMap){
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Patient.txt"))) { // In order to automatically
-            // close the file after
+        // In order to automatically close the file after
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Patient.txt"))) {
+
             for (Patient patient: patientsMap.values()) { // Write each patient's details in the file
 
                 writer.write(patient.getPatientID() + ","
@@ -184,8 +186,9 @@ public class fileManager{
     } // savePatients
 
     private void saveExams(HashMap<Integer, Exam> examsMap) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Exam.txt"))) { // In order to automatically
-            // close the file after
+        // In order to automatically close the file after
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Exam.txt"))) {
+
             for (Exam exam : examsMap.values()) { // Write each exam's details in the file
 
                 String specificAttribute = ""; // Get the exam's category and then it's specific attribute (machine, sample, specialty)
@@ -215,8 +218,8 @@ public class fileManager{
     } // saveExams
 
     private void saveAppointments(HashMap<Integer, Appointment> appointmentsMap){
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Appointment.txt"))) { // In order to
-            // automatically close the file after
+        // In order to automatically close the file after
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Appointment.txt"))) {
 
             for (Appointment appointment: appointmentsMap.values()) { // Write each appointment's details in the file
 

@@ -5,14 +5,15 @@ public class Patient {
     private String patientName ;
     private String patientPhone;
     private String email;
-    //constructor gia dilosis
+
+    // Basic constructor
     public Patient(String patientName, String patientPhone, String email) {
         this.patientID = idCounter++;
         this.patientName = patientName;
         this.patientPhone = patientPhone;
         this.email = email;
     }
-    //constructor gia arxeia
+    // Constructor used for files
     public Patient(int id,String patientName,String patientPhone,String email){
         this.patientID = id;
         this.patientName = patientName;
@@ -39,8 +40,8 @@ public class Patient {
 
 
     public String toString() {
-        return "Kwdikos asthenh: " + patientID + " | Onoma asthenh: " + patientName + " | Thlefwno asthenh: " + patientPhone
-                + " | Email asthenh: " + email;
+        return "Patient's ID: " + patientID + " | Patient's name: " + patientName + " | Patient's phone number: " + patientPhone
+                + " | Patient's email: " + email;
     }
     
 }

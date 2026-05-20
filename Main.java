@@ -1,3 +1,8 @@
+/*
+Ismail Alexios, 3250072, p3250072@aueb.gr
+Daniil Kohut, 3250097, p3250097@aueb.gr
+Michail Koukourempas, 3250259, p3250259@aueb.gr
+*/
 import java.util.HashMap;
 import java.util.Scanner;
 import java.time.LocalDate;
@@ -8,7 +13,6 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Main {
-    // Sylloges se hashmaps
     private static HashMap<Integer, Doctor> doctorsMap = new HashMap<>();
     private static HashMap<Integer, Patient> patientsMap = new HashMap<>();
     private static HashMap<Integer, Exam> examsMap = new HashMap<>();
@@ -17,7 +21,7 @@ public class Main {
     static fileManager fm = new fileManager();
 
 
-    // voithitikh methodos gia na mikrini o kodikas
+    // Additional method created to avoid re-using code
     public static void showAll(HashMap<Integer, ?> map, String type) {
         if (map.isEmpty()) {
             System.out.println("There are no " + type + ".");
@@ -29,7 +33,7 @@ public class Main {
     }
 
     // Doctor menu methods
-    public static void addDoctor() { // Create a new doctor and add to the hashmap
+    public static void addDoctor() {
         System.out.println("Doctor's name: ");
         String name = scanner.nextLine();
 
@@ -60,7 +64,7 @@ public class Main {
                 break;
             default:
                 System.out.println("Invalid specialty!");
-                return; // return to the main menu since we can't create a doctor without specialty
+                return; // Return to the main menu since we can't create a doctor without specialty
         } // switch
 
         System.out.println("Doctor's years of experience: ");
@@ -68,14 +72,12 @@ public class Main {
         scanner.nextLine();
         if (years < 0) {
             System.out.println("Invalid years of experience!");
-            return; // return to the main menu since we can't create a doctor without years of
-                    // experience
+            return; // Return to the main menu since we can't create a doctor without years of experience
         }
 
-        Doctor newDoc = new Doctor(name, phone, specialty, years); // Create a new doctor using the user's
-        // previously given data
+        Doctor newDoc = new Doctor(name, phone, specialty, years); // Create a new doctor using the user's previously given data
         doctorsMap.put(newDoc.getDoctorID(), newDoc); // Add the created doctor in the doctors hashmap
-    }
+    } //addDoctor
 
     public static Doctor chooseDoctor() { // Additional method created to avoid re-using code
         if (doctorsMap.isEmpty()) {
@@ -83,8 +85,8 @@ public class Main {
             return null;
         }
         for (Doctor d : doctorsMap.values()) {
-            System.out.println("Name: " + d.getDoctorName() + " ID: " + d.getDoctorID()); // Showing just the names
-            // and ID's of each doctor, not all the information
+            // Showing just the names and ID's of each doctor, not all the information
+            System.out.println("Name: " + d.getDoctorName() + " ID: " + d.getDoctorID());
         }
         System.out.println("Choose a doctor by inputting their ID: ");
         int chosenDoctorID = scanner.nextInt();
@@ -96,7 +98,7 @@ public class Main {
         return doctorsMap.get(chosenDoctorID); // return the doctor who has the given ID
     } // chooseDoctor
 
-    public static void showOneDoctor() { //
+    public static void showOneDoctor() {
         Doctor doctor = chooseDoctor();
         if (doctor == null) { // return to the main menu if an error occurred during the choice of doctor
             return;
@@ -170,7 +172,7 @@ public class Main {
     } // doctorMenu
 
     // Patients menu methods
-    public static void addPatient() { // Create a new patient and add to the hashmap
+    public static void addPatient() {
         System.out.println("Patient's name: ");
         String name = scanner.nextLine();
 
@@ -180,8 +182,7 @@ public class Main {
         System.out.println("Patient's email address: ");
         String mail = scanner.nextLine();
 
-        Patient newPatient = new Patient(name, phone, mail); // Create a new patient using the user's
-        // previously given data
+        Patient newPatient = new Patient(name, phone, mail); // Create a new patient using the user's previously given data
         patientsMap.put(newPatient.getPatientID(), newPatient); // Add the created patient to the patients hashmap
     }
 
@@ -191,12 +192,11 @@ public class Main {
             return;
         }
         for (Patient p : patientsMap.values()) {
-            System.out.println("Name: " + p.getPatientName() + " ID: " + p.getPatientID());// Showing just the names
-            // and ID's of each patient, not all the information
+            // Showing just the names and ID's of each patient, not all the information
+            System.out.println("Name: " + p.getPatientName() + " ID: " + p.getPatientID());
         }
         System.out.println("Choose a patient by inputting his ID: ");
-        int patientID = scanner.nextInt();
-        scanner.nextLine(); // "Clean" the new line left by the nextInt
+        int patientID = Integer.parseInt(scanner.nextLine());
         Patient patient = patientsMap.get(patientID);
         if (!patientsMap.containsKey(patientID)) {
             System.out.println("There is no patient with the given ID!");
@@ -247,7 +247,7 @@ public class Main {
     } // patientsMenu
 
     // Exam menu methods
-    public static int examCost() {
+    public static int examCost() { // Additional method created to avoid re-using code
         System.out.println("Enter the exam's cost:");
         int cost = scanner.nextInt();
         scanner.nextLine();
@@ -275,7 +275,7 @@ public class Main {
         int cost;
         Exam newExam = null;
 
-        switch (examCategoryInput) {
+        switch (examCategoryInput) { // Choose the additional attributes based on what category the exam is
             case "1":
                 System.out.println("Machine types:");
                 System.out.println("1. MRI\n2. CT\n3. X-RAY");
@@ -362,6 +362,7 @@ public class Main {
         }
     } // addExam
 
+    // Additional showAll, since the existing one can't be used to show alphabetically sorted items
     public static void showAllExamsSorted() {
         if (examsMap.isEmpty()) {
             System.out.println("There are no exams.");
@@ -376,21 +377,9 @@ public class Main {
 
 
         for (Exam exam : examList) {
-            System.out.println(exam.toString()); // Show all the exams
+            System.out.println(exam.toString()); // Finally show all the exams, sorted
         }
     } // showAllExamsSorted
-
-    public static void showAllExamCategories() {
-        HashSet<String> categories = new HashSet<>();
-
-        for (Exam e : examsMap.values()) {
-            categories.add(e.getExamCategory());
-        }
-
-        for (String category : categories) {
-            System.out.println(category);
-        }
-    }
 
     public static void showOneExam() {
         if (examsMap.isEmpty()) {
@@ -399,16 +388,14 @@ public class Main {
         }
         showAll(examsMap, "exams");
         System.out.println("Choose a exam by inputting his ID: ");
-        int ExamID = scanner.nextInt();
-        scanner.nextLine(); // "Katharismos" grammhs logw tou nextInt
+        int ExamID = Integer.parseInt(scanner.nextLine());
         Exam exam = examsMap.get(ExamID);
         if (!examsMap.containsKey(ExamID)) {
             System.out.println("There is no exam with the given ID!");
             return;
         }
         System.out.println("Exams information: " + exam.toString());
-
-    }
+    } // showOneExam
 
     public static void examsMenu() {
         boolean done = false;
@@ -432,54 +419,53 @@ public class Main {
                 case "0":
                     done = true;
                     break;
-            }
-        }
-    }
+            } // switch
+        } // while
+    } // examsMenu
 
+    // Appointment menu methods
     public static void addAppointment() {
 
         if (patientsMap.isEmpty()) {
             System.out.println("No patients available.");
             return;
         }
+
         System.out.println("Choose patient");
         showAll(patientsMap, "patients");
         System.out.println("Choose a patient by inputting their ID: ");
-        int chosenPatientID = scanner.nextInt();
-        scanner.nextLine(); // "Katharismos" grammhs logw tou nextInt
+        int chosenPatientID = Integer.parseInt(scanner.nextLine());
         if (!patientsMap.containsKey(chosenPatientID)) {
             System.out.println("There's no patient with the given ID!");
             return;
         }
         Patient chosenPatient = patientsMap.get(chosenPatientID);
-        System.out.println("Choose Exam");
         if (examsMap.isEmpty()) {
             System.out.println("No exams available.");
             return;
         }
         showAll(examsMap, "exams");
         System.out.println("Choose a exam by inputting their ID: ");
-        int chosenExamId = scanner.nextInt();
-        scanner.nextLine();
+        int chosenExamId = Integer.parseInt(scanner.nextLine());
         if (!examsMap.containsKey(chosenExamId)) {
-            System.out.println("There is no exam with this id");
+            System.out.println("There is no exam with the given ID!");
             return;
         }
         Exam chosenExam = examsMap.get(chosenExamId);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd:MM:yyyy"); // Set the date format
         String examDate = "";
         boolean validDate = false;
         while (!validDate) {
-            System.out.println("Date (DD/MM/YYYY): ");
+            System.out.println("Date (DD:MM:YYYY) : ");
             examDate = scanner.nextLine();
             try {
-                LocalDate.parse(examDate, formatter); // an einai lathos -> exception
+                LocalDate.parse(examDate, formatter); // If the date format is correct
                 validDate = true;
             } catch (DateTimeParseException e) {
-                System.out.println("Invalid date format. Please try again.");
+                System.out.println("Invalid date format. Please try again."); // If the date format is incorrect
             }
         }
-        int count = 0;
+        int count = 0; // How many slots have been filled
         for (Appointment a : appointmentsMap.values()) {
             if (a.getExamID() == chosenExam.getExamID() && a.getExamDate().equals(examDate)) {
                 count++;
@@ -490,16 +476,17 @@ public class Main {
             return;
         }
 
-        System.out.println("Fast results? (1. Yes / 2. No)");
+        System.out.println("Fast results? (Press 1 for Yes / Press 2 for No)");
         String fastInput = scanner.nextLine();
-        boolean fastResults = fastInput.equals("2");
+        boolean fastResults = fastInput.equals("1"); // Fast results status based on the user's input
 
         Appointment newAppointment = new Appointment(chosenPatient.getPatientID(), chosenExam.getExamID(), fastResults,
                 examDate);
         appointmentsMap.put(newAppointment.getAppointmentID(), newAppointment);
+        // Create the appointment and put it in the appointments hashmap
     }
 
-    public static void showPatientsAppointment() {
+    public static void showPatientsAppointment() { // Shows a patient's appointments
         if (patientsMap.isEmpty()) {
             System.out.println("There are no patients.");
             return;
@@ -509,17 +496,15 @@ public class Main {
             // and ID's of each patient, not all the information
         }
         System.out.println("Choose a patient by inputting his ID: ");
-        int patientID = scanner.nextInt();
-        scanner.nextLine(); // "Clean" the new line left by the nextInt
-        Patient patient = patientsMap.get(patientID);
-        if (!patientsMap.containsKey(patientID)) {
+        int chosenPatientID = Integer.parseInt(scanner.nextLine());
+        if (!patientsMap.containsKey(chosenPatientID)) {
             System.out.println("There is no patient with the given ID!");
             return;
         }
         System.out.println("The patient has the following appointments: ");
         boolean isInAppointment = false;
         for (Appointment a : appointmentsMap.values()) {
-            if (a.getPatientID() == patientID) {
+            if (a.getPatientID() == chosenPatientID) {
                 System.out.println(a);
                 isInAppointment = true;
             }
@@ -528,7 +513,7 @@ public class Main {
         if (!isInAppointment) {
             System.out.println("The patient does not have any appointments.");
         }
-    }
+    } // showPatientsAppointment
 
     public static void deleteAppointment() {
         if (appointmentsMap.isEmpty()) {
@@ -537,10 +522,9 @@ public class Main {
         }
         showAll(appointmentsMap, "appointments");
         System.out.println("Chose which appointment you want to delete by giving its ID");
-        int deleteID = scanner.nextInt();
-        scanner.nextLine();
+        int deleteID = Integer.parseInt(scanner.nextLine());
         if (!appointmentsMap.containsKey(deleteID)) {
-            System.out.println("There is no appointment with this id");
+            System.out.println("There is no appointment with this ID!");
         }
         System.out.println("Are you sure you want to delete this appointment 1.YES/2.NO");
         String choice = scanner.nextLine();
@@ -549,18 +533,18 @@ public class Main {
             System.out.println("Appointment deleted!");
 
         }else if(choice.equals("2") || choice.equals("NO") || choice.equals("no")){
-            System.out.println("Deletion canceled");
+            System.out.println("Deletion cancelled");
         }
-    }
+    } // deleteAppointment
 
-    public static void showOneDaysExam() {
+    public static void showOneDaysExam() { // Show all the exams on a specific day
 
         if (appointmentsMap.isEmpty()) {
             System.out.println("There are no appointments.");
             return;
         }
 
-        System.out.println("Enter date (DD/MM/YYYY): ");
+        System.out.println("Enter date (DD:MM:YYYY): ");
         String searchDate = scanner.nextLine();
 
         boolean found = false;
@@ -617,6 +601,7 @@ public class Main {
         } // while
     } // appointmentMenu
 
+    // Statistics menu methods
     public static void totalIncomePerPatient() {
         showAll(patientsMap, "patients");
         double totalIncomeFromAllPatients = 0;
@@ -630,7 +615,7 @@ public class Main {
                     System.out.println("Exam: " + exam.getExamName() + " Cost: " + finalCost);
                     totalIncomeFromPatient += finalCost;
 
-                    System.out.println(appointment.toString());
+                    System.out.println(appointment);
                 } // check if the appointment belongs to the patient
             } // for loop for appointments
             System.out.println("Total income from patient " + patient.getPatientName() + ": " + totalIncomeFromPatient);
@@ -663,23 +648,39 @@ public class Main {
             totalIncomeFromAllExams += totalIncomeFromExam;
         }
         System.out.println("Total income from all exams: " + totalIncomeFromAllExams);
+    } // totalIncomePerExam
+
+
+    public static HashSet<String> getUniqueExamCategories() { // Helper method to find all unique exam categories
+        HashSet<String> categories = new HashSet<>();
+        for (Exam e : examsMap.values()) {
+            categories.add(e.getExamCategory());
+        }
+        return categories;
     }
+
+    public static void showAllExamCategories() { // Helper method used in totalIncomePerExamCategory
+        HashSet<String> categories = getUniqueExamCategories();
+
+        for (String category : categories) {
+            System.out.println(category); // Finally show all categories
+        }
+    } // showAllExamCategories
 
     public static void totalIncomePerExamCategory() {
         showAllExamCategories();
         double totalIncomeFromAllCategories = 0;
 
-        HashSet<String> categories = new HashSet<>();
-        for (Exam e : examsMap.values()) {
-            categories.add(e.getExamCategory());
-        }
+        HashSet<String> categories = getUniqueExamCategories();
 
-        for (String category : categories) {
+        for (String category : categories) { // Go through each unique category
             double totalIncomeFromCategory = 0;
-            for (Exam exam : examsMap.values()) {
+            for (Exam exam : examsMap.values()) { // Find all the exams under that category
                 if (exam.getExamCategory().equals(category)) {
+                    // Search for the appointments with this specific exam
                     for (Appointment appointment : appointmentsMap.values()) {
                         if (appointment.getExamID() == exam.getExamID()) {
+                            // Add the exam's cost to the total income
                             totalIncomeFromCategory += exam.getFinalCost(appointment.getFastResults());
 
                             System.out.println(appointment);
@@ -689,9 +690,9 @@ public class Main {
             }
             System.out.println("Total income from exam category " + category + ": " + totalIncomeFromCategory);
             totalIncomeFromAllCategories += totalIncomeFromCategory;
-        }
+        } // for
         System.out.println("Total income from all exam categories: " + totalIncomeFromAllCategories);
-    }
+    } // totalIncomePerExamCategory
 
     public static void statisticsMenu() {
         boolean done = false;
@@ -721,17 +722,19 @@ public class Main {
 
 
     public static void main(String[] args) {
+        // Initiate the file paths for each "category"
         String filePathDoc = "Doctor.txt";
         String filePathPatient = "Patient.txt";
         String filePathAppointment = "Appointment.txt";
         String filePathExam = "Exam.txt";
 
+        // Initiate the actual files
         File fileDoc = new File(filePathDoc);
         File filePatient = new File(filePathPatient);
         File fileAppointment = new File(filePathAppointment);
         File fileExam = new File(filePathExam);
         if (!fileDoc.exists()) {
-            // default doctors
+            // Default doctors, if there's no existing doctor file
             Doctor d1 = new Doctor("D1", "111", "Cardiology", 10);
             Doctor d2 = new Doctor("D2", "222", "Radiology", 8);
             Doctor d3 = new Doctor("D3", "333", "Microbiology", 3);
@@ -739,24 +742,25 @@ public class Main {
             doctorsMap.put(d1.getDoctorID(), d1);
             doctorsMap.put(d2.getDoctorID(), d2);
             doctorsMap.put(d3.getDoctorID(), d3);
-            doctorsMap.put(d4.getDoctorID(), d4);
+            doctorsMap.put(d4.getDoctorID(), d4); // Load the default doctors to the doctors hashmap
         } else {
-            fm.loadDoctors(doctorsMap);
+            fm.loadDoctors(doctorsMap); // If there is an existing file, load the data from the file to the hashmap
         }
 
         if (!filePatient.exists()) {
-            // default patients
+            // Default patients, if there's no existing patients file
             Patient p1 = new Patient("P1", "6901", "a@a.com");
             Patient p2 = new Patient("P2", "6902", "b@b.com");
             Patient p3 = new Patient("P3", "6903", "c@c.com");
             patientsMap.put(p1.getPatientID(), p1);
             patientsMap.put(p2.getPatientID(), p2);
-            patientsMap.put(p3.getPatientID(), p3);
+            patientsMap.put(p3.getPatientID(), p3); // Load the default patients to the patients hashmap
         } else {
-            fm.loadPatients(patientsMap);
+            fm.loadPatients(patientsMap); // If there is an existing file, load the data from the file to the hashmap
         }
 
         if (!fileExam.exists()) {
+            // Default exams, if there's no existing exams file
             Exam e1 = new ImagingExam(30, "XRAY", 10, 2, "X-Ray");
             Exam e2 = new MicrobiologicalExam(20, "PCR", 20, 3, "Blood");
             Exam e3 = new SpecializedExam(80, "Stress", 3, 1, "Cardiology");
@@ -766,23 +770,26 @@ public class Main {
             examsMap.put(e2.getExamID(), e2);
             examsMap.put(e3.getExamID(), e3);
             examsMap.put(e4.getExamID(), e4);
-            examsMap.put(e5.getExamID(), e5);
+            examsMap.put(e5.getExamID(), e5); // Load the default exams to the exams hashmap
         } else {
-            fm.loadExams(examsMap);
+            fm.loadExams(examsMap); // If there is an existing file, load the data from the file to the hashmap
         }
 
         if (!fileAppointment.exists()) {
-            Appointment a1 = new Appointment(1, 1, true, "10/05/2026");
-            Appointment a2 = new Appointment(2, 2, false, "16/05/2026");
-            Appointment a3 = new Appointment(1, 2, false, "11/05/2026");
-            Appointment a4 = new Appointment(1, 3, true, "16/05/2026");
+            // Default appointments, if there's no existing appointments file
+            Appointment a1 = new Appointment(1, 1, true, "10:05:2026");
+            Appointment a2 = new Appointment(2, 2, false, "16:05:2026");
+            Appointment a3 = new Appointment(1, 2, false, "11:05:2026");
+            Appointment a4 = new Appointment(1, 3, true, "16:05:2026");
             appointmentsMap.put(a1.getAppointmentID(), a1);
             appointmentsMap.put(a2.getAppointmentID(), a2);
             appointmentsMap.put(a3.getAppointmentID(), a3);
-            appointmentsMap.put(a4.getAppointmentID(), a4);
+            appointmentsMap.put(a4.getAppointmentID(), a4); // Load the default appointments to the appointments hashmap
         } else {
-            fm.loadAppointments(appointmentsMap);
+            fm.loadAppointments(appointmentsMap); // If there is an existing file, load the data from the file to the hashmap
         }
+
+        // Main menu
         boolean done = false;
         while (!done) {
             System.out.println("\n1. Doctors");
@@ -810,6 +817,7 @@ public class Main {
                     statisticsMenu();
                     break;
                 case "0":
+                    // When exiting from the program save and load the new data to the files
                     fm.saveData(doctorsMap, patientsMap, examsMap, appointmentsMap);
                     done = true;
                     break;

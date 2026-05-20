@@ -15,7 +15,7 @@
             this.examID = examID;
             this.fastResults = fastResults;
             this.examDate = examDate;
-        }
+    }
 
  // Constructor used for files
     public Appointment(int id,int patientID, int examID, boolean fastResults, String examDate) {

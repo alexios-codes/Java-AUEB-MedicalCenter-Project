@@ -1,12 +1,14 @@
 public class ImagingExam extends Exam {
     private String machineType;
     private final double costIncreaseRate = 0.10;
-//constructor gia dilosis
+
+    // Basic constructor
     public ImagingExam(int cost, String ExamName, int maxSlotsPerDay, int leadDoctorID, String machineType) {
         super(cost, "Imaging", ExamName, maxSlotsPerDay, leadDoctorID);
         this.machineType = machineType;
     }
-//constructor gia arxeia
+
+    // Constructor used for files
     public ImagingExam(int id,int cost,String ExamName,int maxSlotsPerDay,int leadDoctorID,String machineType) {
         super(id,cost,"Imaging",ExamName,maxSlotsPerDay,leadDoctorID);
         this.machineType=machineType;
@@ -26,6 +28,5 @@ public class ImagingExam extends Exam {
 
     public String toString() {
         return super.toString() + "| Machine type: " + machineType;
-
     }
 }
