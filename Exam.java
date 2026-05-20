@@ -7,7 +7,8 @@ public abstract class Exam{
     private int maxSlotsPerDay;
     private int cost;
     private int leadDoctorID;
-    //constructor gia otan diloni
+
+    // Basic constructor
     public Exam(int cost, String ExamCategory, String ExamName, int maxSlotsPerDay, int leadDoctorID) {
         this.ExamID = idCounter++;
         this.ExamCategory = ExamCategory;
@@ -17,7 +18,7 @@ public abstract class Exam{
         this.cost = cost;
     }
 
-//constructor gia arxeia
+    // Constructor used for files
     public Exam(int id,int cost,String ExamCategory,String ExamName,int maxSlotsPerDay,int leadDoctorID){
         this.ExamID = id;
         this.ExamCategory = ExamCategory;
@@ -49,7 +50,7 @@ public abstract class Exam{
     }
 
 
-    public abstract double getFinalCost(boolean fastResults); // για να υπολογίζεται το τελικό κόστος στις υποκλάσεις
+    public abstract double getFinalCost(boolean fastResults); // To calculate the final cost in the subclasses
 
     public String toString() {
         return "Exam ID: " + ExamID + " | Exam name: " + ExamName + " | Exam category: " +

@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.HashSet;
 import java.io.*;
+import java.util.ArrayList;
 
 public class Main {
     // Sylloges se hashmaps
@@ -361,6 +362,24 @@ public class Main {
         }
     } // addExam
 
+    public static void showAllExamsSorted() {
+        if (examsMap.isEmpty()) {
+            System.out.println("There are no exams.");
+            return;
+        }
+
+        // Move all the exams from the hashmap to an arraylist in order to sort them
+        ArrayList<Exam> examList = new ArrayList<>(examsMap.values());
+
+        // Sort alphabetically (based on the exam's name) without caring about upper/lower case letters
+        examList.sort((e1, e2) -> e1.getExamName().compareToIgnoreCase(e2.getExamName()));
+
+
+        for (Exam exam : examList) {
+            System.out.println(exam.toString()); // Show all the exams
+        }
+    } // showAllExamsSorted
+
     public static void showAllExamCategories() {
         HashSet<String> categories = new HashSet<>();
 
@@ -405,7 +424,7 @@ public class Main {
                     addExam();
                     break;
                 case "2":
-                    showAll(examsMap, "exams");
+                    showAllExamsSorted();
                     break;
                 case "3":
                     showOneExam();
@@ -534,6 +553,37 @@ public class Main {
         }
     }
 
+    public static void showOneDaysExam() {
+
+        if (appointmentsMap.isEmpty()) {
+            System.out.println("There are no appointments.");
+            return;
+        }
+
+        System.out.println("Enter date (DD/MM/YYYY): ");
+        String searchDate = scanner.nextLine();
+
+        boolean found = false;
+        System.out.println("\nAppointments for " + searchDate + ":");
+
+        for (Appointment a : appointmentsMap.values()) {
+            if (a.getExamDate().equals(searchDate)) {
+                Patient patient = patientsMap.get(a.getPatientID());
+                Exam exam = examsMap.get(a.getExamID());
+
+                String patientName = patient.getPatientName();
+                String examName = exam.getExamName();
+
+                System.out.println(a + " | Patient Name: " + patientName + " | Exam Name: " + examName);
+                found = true;
+            } // if
+        } // for
+
+        if (!found) {
+            System.out.println("No appointments found for this date.");
+        }
+    } // showOneDaysExam
+
     public static void appointmentMenu() {
         boolean done = false;
         while (!done) {
@@ -557,6 +607,9 @@ public class Main {
                 case "4":
                     deleteAppointment();
                     break;
+                case "5":
+                    showOneDaysExam();
+                    break;
                 case "0":
                     done = true;
                     break;
@@ -566,15 +619,16 @@ public class Main {
 
     public static void totalIncomePerPatient() {
         showAll(patientsMap, "patients");
-        int totalIncomeFromAllPatients = 0;
+        double totalIncomeFromAllPatients = 0;
 
         for (Patient patient : patientsMap.values()) {
-            int totalIncomeFromPatient = 0;
+            double totalIncomeFromPatient = 0;
             for (Appointment appointment : appointmentsMap.values()) {
                 if (appointment.getPatientID() == patient.getPatientID()) {
                     Exam exam = examsMap.get(appointment.getExamID());
-                    System.out.println("Exam: " + exam.getExamName() + " Cost: " + exam.getCost());
-                    totalIncomeFromPatient += exam.getCost();
+                    double finalCost = exam.getFinalCost(appointment.getFastResults());
+                    System.out.println("Exam: " + exam.getExamName() + " Cost: " + finalCost);
+                    totalIncomeFromPatient += finalCost;
 
                     System.out.println(appointment.toString());
                 } // check if the appointment belongs to the patient
@@ -587,19 +641,19 @@ public class Main {
 
     public static void totalIncomePerExam() {
         showAll(examsMap, "exams");
-        int totalIncomeFromAllExams = 0;
+        double totalIncomeFromAllExams = 0;
 
         for (Exam exam : examsMap.values()) {
-            int totalIncomeFromExam = 0;
+            double totalIncomeFromExam = 0;
             int totalAppointmentsForExam = 0;
             int examCost = exam.getCost();
-            int totalIncomeFromExamAppointments = 0;
+            double totalIncomeFromExamAppointments = 0;
             for (Appointment appointment : appointmentsMap.values()) {
                 if (appointment.getExamID() == exam.getExamID()) {
-                    totalIncomeFromExam += exam.getCost();
+                    totalIncomeFromExam += exam.getFinalCost(appointment.getFastResults());
                     totalAppointmentsForExam++;
 
-                    System.out.println(appointment.toString());
+                    System.out.println(appointment);
                 }
             }
             totalIncomeFromExamAppointments = totalAppointmentsForExam * examCost;
@@ -613,7 +667,7 @@ public class Main {
 
     public static void totalIncomePerExamCategory() {
         showAllExamCategories();
-        int totalIncomeFromAllCategories = 0;
+        double totalIncomeFromAllCategories = 0;
 
         HashSet<String> categories = new HashSet<>();
         for (Exam e : examsMap.values()) {
@@ -621,14 +675,14 @@ public class Main {
         }
 
         for (String category : categories) {
-            int totalIncomeFromCategory = 0;
+            double totalIncomeFromCategory = 0;
             for (Exam exam : examsMap.values()) {
                 if (exam.getExamCategory().equals(category)) {
                     for (Appointment appointment : appointmentsMap.values()) {
                         if (appointment.getExamID() == exam.getExamID()) {
-                            totalIncomeFromCategory += exam.getCost();
+                            totalIncomeFromCategory += exam.getFinalCost(appointment.getFastResults());
 
-                            System.out.println(appointment.toString());
+                            System.out.println(appointment);
                         }
                     }
                 }
@@ -702,7 +756,7 @@ public class Main {
             fm.loadPatients(patientsMap);
         }
 
-        /*if (!fileExam.exists()) {
+        if (!fileExam.exists()) {
             Exam e1 = new ImagingExam(30, "XRAY", 10, 2, "X-Ray");
             Exam e2 = new MicrobiologicalExam(20, "PCR", 20, 3, "Blood");
             Exam e3 = new SpecializedExam(80, "Stress", 3, 1, "Cardiology");
@@ -715,7 +769,7 @@ public class Main {
             examsMap.put(e5.getExamID(), e5);
         } else {
             fm.loadExams(examsMap);
-        }*/
+        }
 
         if (!fileAppointment.exists()) {
             Appointment a1 = new Appointment(1, 1, true, "10/05/2026");

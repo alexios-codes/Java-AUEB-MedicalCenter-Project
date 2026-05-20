@@ -5,21 +5,22 @@ public class Doctor {
     private int years;
     private String doctorName;
     private String doctorPhone;
-    private String speciality ;
-    //constructor gia dilosis
-    public Doctor(String doctorName, String doctorPhone, String speciality, int years) {
+    private String specialty;
+
+    // Basic constructor
+    public Doctor(String doctorName, String doctorPhone, String specialty, int years) {
         this.doctorID = idCounter++;
         this.doctorName = doctorName;
         this.doctorPhone = doctorPhone;
-        this.speciality = speciality;
+        this.specialty = specialty;
         this.years = years;
     }
-//constructor gia arxeia
-    public Doctor(int id,String doctorName,String doctorPhone,String speciality,int years) {
+    // Constructor used for files
+    public Doctor(int id,String doctorName,String doctorPhone,String specialty,int years) {
         this.doctorID=id;
         this.doctorName = doctorName;
         this.doctorPhone=doctorPhone;
-        this.speciality=speciality;
+        this.specialty=specialty;
         this.years=years;
         if (id >= idCounter) idCounter = id + 1;
     }
@@ -38,12 +39,12 @@ public class Doctor {
         return doctorPhone;
     }
     public String getSpeciality() {
-        return speciality;
+        return specialty;
     }
 
     public String toString() {
-        return "Kwdikos iatrou: " + doctorID + " | Onoma iatrou: " + doctorName + " | Thlefwno iatrou: " +
-                doctorPhone + " | Eidikothta iatrou: " + speciality + "| Xronia empeirias: " + years;
+        return "Doctor's ID: " + doctorID + " | Doctor's name: " + doctorName + " | Doctor's telephone number: " +
+                doctorPhone + " | Doctor's specialty: " + specialty + "| Doctor's years of experience: " + years;
     }
     
 }
